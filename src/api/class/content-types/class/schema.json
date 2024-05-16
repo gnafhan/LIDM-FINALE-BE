@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "classes",
+  "info": {
+    "singularName": "class",
+    "pluralName": "classes",
+    "displayName": "class",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama_kelas": {
+      "type": "string"
+    },
+    "nama_pengajar": {
+      "type": "string"
+    },
+    "gambar_kelas": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "students": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::student.student",
+      "mappedBy": "classes"
+    },
+    "modules": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::module.module",
+      "mappedBy": "classes"
+    },
+    "quizzes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::quiz.quiz",
+      "mappedBy": "classes"
+    },
+    "kode_kelas": {
+      "type": "customField",
+      "options": {
+        "uuid-format": "^CLS-[A-Z0-9]{8}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    }
+  }
+}

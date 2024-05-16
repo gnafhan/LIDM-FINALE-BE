@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "students",
+  "info": {
+    "singularName": "student",
+    "pluralName": "students",
+    "displayName": "Student",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "classes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::class.class",
+      "inversedBy": "students"
+    },
+    "student_id": {
+      "type": "customField",
+      "options": {
+        "uuid-format": "^STD-[A-Z0-9]{8}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    }
+  }
+}
