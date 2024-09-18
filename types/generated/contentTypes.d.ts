@@ -826,6 +826,35 @@ export interface ApiAnswerAnswer extends Schema.CollectionType {
   };
 }
 
+export interface ApiBookBook extends Schema.CollectionType {
+  collectionName: 'books';
+  info: {
+    singularName: 'book';
+    pluralName: 'books';
+    displayName: 'Book';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    author: Attribute.String;
+    year: Attribute.String;
+    synopsis: Attribute.Text;
+    pdfUrl: Attribute.Media;
+    coverUrl: Attribute.Media;
+    transcriptUrl: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::book.book', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::book.book', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiClassClass extends Schema.CollectionType {
   collectionName: 'classes';
   info: {
@@ -1006,6 +1035,40 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
   };
 }
 
+export interface ApiSavedBookSavedBook extends Schema.CollectionType {
+  collectionName: 'saved_books';
+  info: {
+    singularName: 'saved-book';
+    pluralName: 'saved-books';
+    displayName: 'savedBook';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user_equilibs: Attribute.Relation<
+      'api::saved-book.saved-book',
+      'manyToMany',
+      'api::user-equilib.user-equilib'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::saved-book.saved-book',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::saved-book.saved-book',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStudentStudent extends Schema.CollectionType {
   collectionName: 'students';
   info: {
@@ -1054,6 +1117,42 @@ export interface ApiStudentStudent extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserEquilibUserEquilib extends Schema.CollectionType {
+  collectionName: 'user_equilibs';
+  info: {
+    singularName: 'user-equilib';
+    pluralName: 'user-equilibs';
+    displayName: 'userEquilib';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    client_id: Attribute.String;
+    ip_address: Attribute.String;
+    saved_books: Attribute.Relation<
+      'api::user-equilib.user-equilib',
+      'manyToMany',
+      'api::saved-book.saved-book'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-equilib.user-equilib',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-equilib.user-equilib',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1073,11 +1172,14 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::answer.answer': ApiAnswerAnswer;
+      'api::book.book': ApiBookBook;
       'api::class.class': ApiClassClass;
       'api::module.module': ApiModuleModule;
       'api::question.question': ApiQuestionQuestion;
       'api::quiz.quiz': ApiQuizQuiz;
+      'api::saved-book.saved-book': ApiSavedBookSavedBook;
       'api::student.student': ApiStudentStudent;
+      'api::user-equilib.user-equilib': ApiUserEquilibUserEquilib;
     }
   }
 }
